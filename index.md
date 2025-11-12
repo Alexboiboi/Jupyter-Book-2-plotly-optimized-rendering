@@ -5,40 +5,108 @@ kernelspec:
   name: python3
 ---
 
-# Minimalist Jupyter Book with Plotly
+# Multiple Plotly Plots - Performance Test
 
-This is a simple example of a Jupyter Book featuring an interactive Plotly visualization.
+This page tests how Jupyter Book handles many Plotly plots with the static PNG fallback approach.
 
-## Interactive Visualization
-
-Below is an example of a Plotly chart showing a simple scatter plot with a trend line.
+## Setup
 
 ```{code-cell} python
-:label: plotly-scatter
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
+import numpy as np
+import plotly.io as pio
 
-# Create sample data
-data = {
-    'x': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    'y': [2.3, 4.1, 5.8, 7.2, 9.5, 11.1, 13.4, 15.2, 17.8, 19.5]
-}
-df = pd.DataFrame(data)
+# Configure Plotly to output both static and interactive formats
+pio.renderers.default = "plotly_mimetype+png"
 
-# Create an interactive scatter plot
-fig = px.scatter(df, x='x', y='y', 
-                 title='Interactive Plotly Scatter Plot',
-                 labels={'x': 'X Values', 'y': 'Y Values'})
-
-fig.update_traces(marker=dict(size=12, color='royalblue'))
-fig.show()
+# Set random seed for reproducibility
+np.random.seed(42)
 ```
 
-## About This Book
+## Generate Plots
 
-This book demonstrates:
-- MyST Markdown syntax with executable code cells
-- Interactive Plotly visualizations
-- Jupyter Book's ability to render dynamic content
+```{code-cell} python
+# Different plot types to cycle through
+plot_types = [
+    'scatter', 'line', 'bar', 'histogram', 'box', 
+    'heatmap', 'pie', 'violin', 'area', 'funnel'
+]
 
-Here we reference the plot above: [](#plotly-scatter)
+for i in range(50):
+    plot_type = plot_types[i % len(plot_types)]
+    
+    if plot_type == 'scatter':
+        df = pd.DataFrame({
+            'x': np.random.randn(50),
+            'y': np.random.randn(50)
+        })
+        fig = px.scatter(df, x='x', y='y', title=f'Plot {i+1}: Scatter')
+        
+    elif plot_type == 'line':
+        x = np.linspace(0, 10, 50)
+        y = np.sin(x + i/10) + np.random.randn(50) * 0.1
+        fig = go.Figure(data=go.Scatter(x=x, y=y, mode='lines'))
+        fig.update_layout(title=f'Plot {i+1}: Line Chart')
+        
+    elif plot_type == 'bar':
+        categories = [f'Cat{j}' for j in range(5)]
+        values = np.random.randint(10, 100, 5)
+        fig = px.bar(x=categories, y=values, title=f'Plot {i+1}: Bar Chart')
+        
+    elif plot_type == 'histogram':
+        data = np.random.normal(i/10, 1, 200)
+        fig = px.histogram(x=data, nbins=20, title=f'Plot {i+1}: Histogram')
+        
+    elif plot_type == 'box':
+        df = pd.DataFrame({
+            'category': np.repeat(['A', 'B', 'C'], 20),
+            'value': np.random.randn(60)
+        })
+        fig = px.box(df, x='category', y='value', title=f'Plot {i+1}: Box Plot')
+        
+    elif plot_type == 'heatmap':
+        z = np.random.randn(10, 10)
+        fig = go.Figure(data=go.Heatmap(z=z, colorscale='Viridis'))
+        fig.update_layout(title=f'Plot {i+1}: Heatmap')
+        
+    elif plot_type == 'pie':
+        labels = [f'Slice{j}' for j in range(4)]
+        values = np.random.randint(10, 100, 4)
+        fig = px.pie(values=values, names=labels, title=f'Plot {i+1}: Pie Chart')
+        
+    elif plot_type == 'violin':
+        df = pd.DataFrame({
+            'category': np.repeat(['X', 'Y', 'Z'], 30),
+            'value': np.random.randn(90)
+        })
+        fig = px.violin(df, y='value', x='category', title=f'Plot {i+1}: Violin Plot')
+        
+    elif plot_type == 'area':
+        x = np.linspace(0, 10, 50)
+        y = np.cumsum(np.random.randn(50))
+        fig = px.area(x=x, y=y, title=f'Plot {i+1}: Area Chart')
+        
+    elif plot_type == 'funnel':
+        stages = ['Stage1', 'Stage2', 'Stage3', 'Stage4']
+        values = [100, 75, 50, 25]
+        fig = go.Figure(go.Funnel(y=stages, x=values))
+        fig.update_layout(title=f'Plot {i+1}: Funnel Chart')
+    
+    # Show the plot
+    fig.update_layout(height=400, width=600).show()
+    
+    # Add spacing between plots
+    if (i + 1) % 10 == 0:
+        print(f"\n--- {i+1} plots generated ---\n")
+```
+
+## Performance Notes
+
+With the `plotly_mimetype+png` renderer and many plots:
+- Static PNG images load immediately
+- Interactive features activate only when hovering/clicking
+- This reduces initial page load time and memory usage
+- Only the actively viewed plot needs full interactive rendering
+- Scroll through the page to test performance!
