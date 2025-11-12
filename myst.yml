@@ -1,0 +1,10 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 441e6276-e2f1-4ee9-8d7a-9dc03916ffc1
+  title: Minimalist Jupyter Book with Plotly
+  description: A simple book demonstrating interactive Plotly visualizations
+  jupyter: true
+  
+site:
+  template: book-theme

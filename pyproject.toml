@@ -1,0 +1,11 @@
+[project]
+name = "jb2"
+version = "0.1.0"
+description = "Minimalist Jupyter Book with Plotly"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "jupyter-book>=2.0.2",
+    "plotly>=5.0.0",
+    "pandas>=2.0.0",
+]
