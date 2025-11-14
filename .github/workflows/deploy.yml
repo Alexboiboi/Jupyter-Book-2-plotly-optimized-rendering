@@ -51,7 +51,7 @@ jobs:
       - name: Build HTML Assets
         run: jupyter-book build --html --execute
         env:
-          PLOT_COUNT: 20
+          PLOT_COUNT: 50
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
