@@ -46,7 +46,7 @@ plot_types = [
     'heatmap', 'pie', 'violin', 'area', 'funnel'
 ]
 
-for i in range(2):
+for i in range(50):
     plot_type = plot_types[i % len(plot_types)]
     
     if plot_type == 'scatter':
