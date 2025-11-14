@@ -10,3 +10,5 @@ project:
   
 site:
   template: book-theme
+  options:
+    style: "_static/custom.css"
