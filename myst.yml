@@ -5,6 +5,8 @@ project:
   title: Minimalist Jupyter Book with Plotly
   description: A simple book demonstrating interactive Plotly visualizations
   jupyter: true
+  exclude:
+    - README.md
   
 site:
   template: book-theme

@@ -5,9 +5,22 @@ kernelspec:
   name: python3
 ---
 
-# Multiple Plotly Plots - Performance Test
+# Multiple Plotly Plots - HTML Rendering
 
-This page tests how Jupyter Book handles many Plotly plots with the static PNG fallback approach.
+This page tests how Jupyter Book handles many Plotly plots with normal HTML rendering.
+
+## Performance Notes
+
+With normal HTML rendering and many plots (compared to PNG fallback):
+
+- **Build Process**: Slower - Full interactive HTML is generated during build
+- **Rendering**: Faster - All plots are immediately interactive
+- Full Plotly interactivity available from page load
+- Higher initial page load time and memory usage
+- All plots render interactively simultaneously
+- Scroll through the page to test performance!
+
+**Note**: Compare with the PNG fallback version for faster build times at the cost of slower interactive rendering.
 
 ## Setup
 
@@ -18,9 +31,6 @@ import pandas as pd
 import numpy as np
 import plotly.io as pio
 
-# Configure Plotly to output both static and interactive formats
-pio.renderers.default = "plotly_mimetype+png"
-
 # Set random seed for reproducibility
 np.random.seed(42)
 ```
@@ -28,13 +38,15 @@ np.random.seed(42)
 ## Generate Plots
 
 ```{code-cell} python
+:tags: [hide-input]
+
 # Different plot types to cycle through
 plot_types = [
     'scatter', 'line', 'bar', 'histogram', 'box', 
     'heatmap', 'pie', 'violin', 'area', 'funnel'
 ]
 
-for i in range(50):
+for i in range(2):
     plot_type = plot_types[i % len(plot_types)]
     
     if plot_type == 'scatter':
@@ -101,12 +113,3 @@ for i in range(50):
     if (i + 1) % 10 == 0:
         print(f"\n--- {i+1} plots generated ---\n")
 ```
-
-## Performance Notes
-
-With the `plotly_mimetype+png` renderer and many plots:
-- Static PNG images load immediately
-- Interactive features activate only when hovering/clicking
-- This reduces initial page load time and memory usage
-- Only the actively viewed plot needs full interactive rendering
-- Scroll through the page to test performance!
