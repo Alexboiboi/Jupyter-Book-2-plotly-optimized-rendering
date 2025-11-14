@@ -1,9 +1,8 @@
 ---
-myst:
-  html_meta:
-    "description lang=en": "Jupyter Book with Plotly optimized rendering examples"
-    "keywords": "jupyter-book, plotly, optimization, rendering"
-    "property=og:locale": "en_US"
+html_meta:
+  "description lang=en": "Jupyter Book with Plotly optimized rendering examples"
+  "keywords": "jupyter-book, plotly, optimization, rendering"
+  "property=og:locale": "en_US"
 ---
 
 # Jupyter Book with Plotly Optimized Rendering
@@ -33,11 +32,22 @@ pip install -e .
 jupyter-book build --html --execute
 ```
 
+### Full Build (Production)
+
+```bash
+PLOT_COUNT=20 jupyter-book build --html --execute
+```
+
 ## Performance Comparison
 
-| Method | Initial Load | Interactivity | Build Time |
-|--------|-------------|---------------|------------|
-| HTML Only | Slower | Immediate | Faster |
-| PNG + HTML | Faster | On Hover | Slower |
+| Method | Initial Load | Interactivity | Build Time | Data Volume |
+|--------|-------------|---------------|------------|-------------|
+| HTML Only | Slower | Immediate | Faster | High (50K+ points per plot) |
+| PNG + HTML | Faster | On Hover | Slower | High (50K+ points per plot) |
 
-Choose the method that best fits your use case!
+**Key Improvements:**
+
+- **Scatter plots** use WebGL acceleration (`scattergl`) with 50,000+ points (50 traces) in 2×2 subplots
+- **Subplots** (2×2 grids) for scatter, line, and bar charts
+- **Large datasets**: 4,000-10,000+ data points per visualization
+- **Complex interactions**: Multiple overlaid traces and detailed hover information
