@@ -249,7 +249,7 @@ def generate_plot(plot_type: str, index: int) -> go.Figure:
         values = np.sort(np.random.exponential(100, 15))[::-1]  # Decreasing values
         fig.add_trace(go.Funnel(y=stages, x=values, textinfo="value+percent initial"))
         fig.update_layout(
-            title=f"Plot {index + 1}: Funnel Chart (15 stages)",
+            title=f"Plot {index + 1}: Funnel Chart (15 stages)", width=1000,
         )
 
     else:
@@ -272,6 +272,13 @@ def generate_plots(num_plots: int = None, show_progress: bool = True) -> None:
     for i in range(num_plots):
         plot_type = PLOT_TYPES[i % len(PLOT_TYPES)]
         fig = generate_plot(plot_type, i)
+
+        # Configure for theme-aware rendering
+        # Use transparent background so theme can control it
+        fig.update_layout(
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+        )
 
         # Show the plot
         fig.show()

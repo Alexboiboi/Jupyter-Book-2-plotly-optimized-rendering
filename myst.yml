@@ -12,3 +12,4 @@ site:
   template: book-theme
   options:
     style: "_static/custom.css"
+    javascript: "_static/theme-plotly.js"
