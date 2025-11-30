@@ -1,4 +1,7 @@
 ---
+title: Jupyter Book with Plotly Optimized Rendering
+authors:
+  - name: Alexandre Boisselet
 html_meta:
   "description lang=en": "Jupyter Book with Plotly optimized rendering examples"
   "keywords": "jupyter-book, plotly, optimization, rendering"

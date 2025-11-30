@@ -7,7 +7,25 @@ project:
   jupyter: true
   exclude:
     - README.md
-  
+  authors:
+    - name: Alexandre Boisselet
+  parts:
+    abstract: |
+      This Jupyter Book demonstrates different approaches to rendering Plotly charts,
+      comparing performance and user experience between traditional HTML rendering
+      and optimized PNG fallback with interactive hover features.
+  exports:
+    - format: pdf
+      template: lapreprint-typst
+      id: book-pdf
+      output: _build/exports/book.pdf
+      articles:
+        - index.md
+        - non_optimized.md
+        - optimized.md
+  downloads:
+    - id: book-pdf
+      title: Download PDF
 site:
   template: book-theme
   options:

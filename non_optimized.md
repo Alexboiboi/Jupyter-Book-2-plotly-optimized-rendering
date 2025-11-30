@@ -26,6 +26,8 @@ With normal HTML rendering and **large datasets** (compared to PNG fallback):
 ## Setup
 
 ```{code-cell} python
+:tags: [hide-input]
+
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd

@@ -48,8 +48,17 @@ jobs:
         run: pip install -e .
       - name: Install Jupyter Book (via myst)
         run: npm install -g jupyter-book
+      - name: Install Typst
+        run: |
+          wget https://github.com/typst/typst/releases/download/v0.12.0/typst-x86_64-unknown-linux-musl.tar.xz
+          tar -xf typst-x86_64-unknown-linux-musl.tar.xz
+          sudo mv typst-x86_64-unknown-linux-musl/typst /usr/local/bin/
+      - name: Build PDF
+        run: jupyter-book build --pdf --execute
+        env:
+          PLOT_COUNT: 50
       - name: Build HTML Assets
-        run: jupyter-book build --html --execute
+        run: jupyter-book build --html
         env:
           PLOT_COUNT: 50
       - name: Upload artifact
