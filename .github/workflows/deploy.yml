@@ -58,7 +58,7 @@ jobs:
         env:
           PLOT_COUNT: 50
       - name: Build HTML Assets
-        run: jupyter-book build --html
+        run: jupyter-book build --html --execute
         env:
           PLOT_COUNT: 50
       - name: Upload artifact
